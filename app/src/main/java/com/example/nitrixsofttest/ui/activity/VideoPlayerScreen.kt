@@ -1,26 +1,28 @@
 package com.example.nitrixsofttest.ui.activity
 
-import android.content.Context
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.nitrixsofttest.ui.viewmodels.VideoPlayerViewModel
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.ui.PlayerView
 
 @Composable
-    fun VideoPlayerScreen(
-    context : Context,
-    path: String,
-    ) {
-        val mediaSource = remember(path) {
-            MediaItem.fromUri(path)
+fun VideoPlayerScreen(viewModel: VideoPlayerViewModel = hiltViewModel()) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    if (uiState.isLoading) {
+        val mediaSource = remember(uiState.video.source) {
+            MediaItem.fromUri(uiState.video.source)
         }
         val exoPlayer = ExoPlayer.Builder(context).build()
 
@@ -42,7 +44,9 @@ import com.google.android.exoplayer2.ui.PlayerView
                 }
             },
             modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
+                .fillMaxSize()
         )
+    } else {
+        ProgressBar()
     }
+}

@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface VideoRepository {
     suspend fun getMediaFromApi(): MediaResponse
-    suspend fun getVideosFromDb(): Flow<List<VideoEntity>>
+    suspend fun getVideoById(id : Int): Flow<VideoEntity>
     suspend fun saveVideos(videos: List<VideoEntity>)
 }

@@ -14,6 +14,9 @@ interface VideoDao {
 
     @Query("SELECT * FROM videos")
      fun getAllVideos(): Flow<List<VideoEntity>>
+
+     @Query("SELECT * FROM videos WHERE id=:id")
+     fun getVideoByID(id: Int) : Flow<VideoEntity>
 }
 
 

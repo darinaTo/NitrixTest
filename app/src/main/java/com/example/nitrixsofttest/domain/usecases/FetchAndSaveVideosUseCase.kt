@@ -8,9 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class FetchAndSaveVideosUseCase @Inject constructor(
-    private val repository: VideoRepository
-) {
+class FetchAndSaveVideosUseCase @Inject constructor(private val repository: VideoRepository) {
     fun execute(): Flow<List<VideoUiEntity>> = flow {
         val mediaResponses = repository.getMediaFromApi()
         val videoResponses = mediaResponses.categories.flatMap { category ->
@@ -20,6 +18,6 @@ class FetchAndSaveVideosUseCase @Inject constructor(
             videoResponse.mapToDbEntity(index)
         }
         repository.saveVideos(videoEntities)
-        emit(videoEntities.mapToUiEntity())
+        emit(videoEntities.map { it.mapToUiEntity() })
     }
 }
