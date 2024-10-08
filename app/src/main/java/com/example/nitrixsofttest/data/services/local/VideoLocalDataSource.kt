@@ -9,9 +9,9 @@ import javax.inject.Inject
 class VideoLocalDataSource @Inject constructor(
     private val videoDao: VideoDao
 ) {
-    suspend fun getVideosFromDb(): Flow<List<VideoEntity>> =
+    suspend fun getVideoById(id : Int): Flow<VideoEntity> =
         withContext(Dispatchers.IO) {
-            videoDao.getAllVideos()
+            videoDao.getVideoByID(id)
         }
 
 

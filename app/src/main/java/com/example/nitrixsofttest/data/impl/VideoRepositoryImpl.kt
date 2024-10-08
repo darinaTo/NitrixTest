@@ -17,8 +17,8 @@ class VideoRepositoryImpl @Inject constructor(
         return remoteDataSource.getMediasFromApi().getOrDefault(MediaResponse(emptyList()))
     }
 
-    override suspend fun getVideosFromDb(): Flow<List<VideoEntity>> {
-        return localDataSource.getVideosFromDb()
+    override suspend fun getVideoById(id : Int): Flow<VideoEntity> {
+        return localDataSource.getVideoById(id)
     }
 
     override suspend fun saveVideos(videos: List<VideoEntity>) {

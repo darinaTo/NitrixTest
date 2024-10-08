@@ -2,7 +2,7 @@ package com.example.nitrixsofttest.ui.uistate
 
 import com.example.nitrixsofttest.domain.entities.uiEnitites.VideoUiEntity
 
-data class VideoUiState(
-    val videos: List<VideoUiEntity> = emptyList(),
+data class VideoPlayerUiState(
+    val video: VideoUiEntity = VideoUiEntity(),
     val isLoading: Boolean = false
 )

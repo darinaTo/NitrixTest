@@ -22,7 +22,6 @@ class VideoViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
             loadVideos()
         }
     }
@@ -30,7 +29,7 @@ class VideoViewModel @Inject constructor(
     private fun loadVideos() {
         viewModelScope.launch {
             fetchAndSaveVideosUseCase.execute().onEach { list ->
-                _uiState.update { it.copy(videos = list, isLoading = false) }
+                _uiState.update { it.copy(videos = list, isLoading = true) }
             }.launchIn(viewModelScope)
         }
     }
